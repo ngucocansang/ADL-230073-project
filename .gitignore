@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+source_code/vector_store/
+.venv/
+.DS_Store
+*.mp4

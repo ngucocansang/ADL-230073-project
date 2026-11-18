@@ -1,0 +1,144 @@
+{
+  "baseline": {
+    "Q01": {
+      "label": "correct",
+      "note": "CS313 is right, but the description attributed to CS313 (GANs, RL, transformers) is actually CS311's"
+    },
+    "Q03": {
+      "label": "incorrect",
+      "note": "claims the minor also requires a capstone course; CS201 and the 24 credits are missing"
+    },
+    "Q04": {
+      "label": "incorrect",
+      "note": "adds an invented requirement of six courses, including a non-existent CS 202"
+    },
+    "Q05": {
+      "label": "incorrect",
+      "note": "GPA 3.5 + application are right, but four extra criteria are invented"
+    },
+    "Q06": {
+      "label": "incorrect",
+      "note": "adds a fourth 'MLO' copied from the program description"
+    },
+    "Q14": {
+      "label": "incorrect",
+      "note": "garbles the prerequisites ('CS201: Computer Science (CS101)', 'MATH 202: Mathematics (CS202)')"
+    },
+    "Q18": {
+      "label": "incorrect",
+      "note": "'up to 2 exploratory courses (24 credits)'; never says that 6 are required"
+    },
+    "Q22": {
+      "label": "incorrect",
+      "note": "lists teaching methods as assessment examples and invents course-code mappings"
+    },
+    "Q27": {
+      "label": "correct",
+      "note": "title and prerequisite right; adds invented topics (pattern recognition)"
+    },
+    "Q30": {
+      "label": "incorrect",
+      "note": "speculates that the head is 'a professor or faculty member'"
+    },
+    "Q32": {
+      "label": "incorrect",
+      "note": "answers the rule for declaring the major (two courses) instead of the minor"
+    }
+  },
+  "baseline-1.5b": {
+    "Q02": {
+      "label": "correct",
+      "note": "56 credits is right; the breakdown lists the OR-alternatives as if cumulative"
+    }
+  },
+  "grounded-v1-0.5b": {
+    "Q07": {
+      "label": "incorrect",
+      "note": "second 'PEO' is a sentence from the program description"
+    }
+  },
+  "grounded-v1-1.5b": {
+    "Q03": {
+      "label": "incorrect",
+      "note": "'6 credits, 6 courses' - the minor is 24 credits"
+    },
+    "Q20": {
+      "label": "incorrect",
+      "note": "'Four additional intermediate courses' instead of two"
+    },
+    "Q22": {
+      "label": "incorrect",
+      "note": "merges the teaching-methods column into the assessment examples"
+    }
+  },
+  "grounded-v1-3b": {
+    "Q12": {
+      "label": "correct",
+      "note": "right, but the answer starts with a copied passage header '(CS_MajorHandbook.pdf, p. 2)'"
+    },
+    "Q16": {
+      "label": "correct",
+      "note": "copies the raw passage '[3] (CS_MajorHandbook.pdf, p. 13) ... (4 credits)' instead of answering"
+    },
+    "Q18": {
+      "label": "refused",
+      "note": "answered 'I could not find this information' although the passage was retrieved"
+    },
+    "Q22": {
+      "label": "incorrect",
+      "note": "merges the teaching-methods column into the assessment examples"
+    }
+  },
+  "improved-0.5b": {
+    "Q04": {
+      "label": "incorrect",
+      "note": "claims the two courses must be CS101 and CS103"
+    },
+    "Q14": {
+      "label": "incorrect",
+      "note": "lists CS302 itself as one of its own prerequisites"
+    },
+    "Q20": {
+      "label": "incorrect",
+      "note": "degenerate list 'CS 401 ... CS 412: Capstone Project' (cut by the 512-token cap)"
+    },
+    "Q22": {
+      "label": "incorrect",
+      "note": "describes teaching methods (Lecture, Lab) as assessment examples"
+    },
+    "Q25": {
+      "label": "correct",
+      "note": "all 15 courses, then starts repeating items"
+    },
+    "Q32": {
+      "label": "incorrect",
+      "note": "invents requirements (CS201, three intermediate courses, capstone)"
+    }
+  },
+  "improved-3b": {
+    "Q15": {
+      "label": "correct",
+      "note": "all three courses, but copies the table cells 'CS TBA' after each title"
+    },
+    "Q22": {
+      "label": "incorrect",
+      "note": "merges the teaching-methods column (Lecture, Lab, ...) into the assessment examples"
+    }
+  },
+  "improved-1.5b-c1000": {
+    "Q22": {
+      "label": "incorrect",
+      "note": "merges the teaching-methods column (Lecture, Lab, ...) into the assessment examples"
+    }
+  },
+  "improved-1.5b": {
+    "Q03": {
+      "label": "correct",
+      "note": "lists all six courses and 24 credits (keyword 'six' missing, so the auto-label was incomplete)"
+    },
+    "Q22": {
+      "label": "incorrect",
+      "note": "merges the teaching-methods column (Lecture, Lab, ...) into the assessment examples"
+    }
+  }
+}

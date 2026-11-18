@@ -1,0 +1,9 @@
+**/__pycache__
+**/*.pyc
+**/.DS_Store
+source_code/vector_store
+source_code/screenshots
+source_code/eval/results
+report
+demo_video
+.git

@@ -1,0 +1,73 @@
+# ---------------------------------------------------------------------------
+# Full local stack:  Ollama server  +  one-shot model download  +  web app
+#   cd docker && docker compose up --build        ->  http://localhost:8501
+# ---------------------------------------------------------------------------
+name: cs-handbook-rag
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: rag-ollama
+    # The app reaches Ollama on the internal network (http://ollama:11434), so the
+    # port is NOT published by default - this avoids a clash with an Ollama that
+    # may already be running on the host. Uncomment to expose it as 11435.
+    # ports:
+    #   - "11435:11434"
+    volumes:
+      - ollama_models:/root/.ollama          # downloaded models survive restarts
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+    # Uncomment on a Linux machine with an NVIDIA GPU (+ nvidia-container-toolkit)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices: [{driver: nvidia, count: all, capabilities: [gpu]}]
+
+  model-init:                                 # pulls the models once, then exits
+    image: ollama/ollama:latest
+    container_name: rag-model-init
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      - OLLAMA_HOST=ollama:11434
+    volumes:
+      - ollama_models:/root/.ollama
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      "ollama pull ${EMBED_MODEL:-nomic-embed-text} &&
+       ollama pull ${LLM_MODEL:-qwen2.5:1.5b} &&
+       echo 'models ready'"
+    restart: "no"
+
+  app:
+    build:
+      context: ..                             # project root
+      dockerfile: docker/Dockerfile
+    image: cs-handbook-rag:latest
+    container_name: rag-app
+    depends_on:
+      model-init:
+        condition: service_completed_successfully
+    environment:
+      - OLLAMA_URL=http://ollama:11434
+      - LLM_MODEL=${LLM_MODEL:-qwen2.5:1.5b}
+      - EMBED_MODEL=${EMBED_MODEL:-nomic-embed-text}
+      - TOP_K=${TOP_K:-5}
+      - RETRIEVAL_MODE=${RETRIEVAL_MODE:-hybrid}
+    ports:
+      - "8501:8501"
+    volumes:
+      # Knowledge base mounted from the host: drop other PDFs here and restart
+      - ../source_code/data/handbook:/app/data/handbook:ro
+      # Persisted Chroma index (rebuilt automatically when the PDFs change)
+      - vector_store:/app/vector_store
+    restart: unless-stopped
+
+volumes:
+  ollama_models:
+  vector_store:

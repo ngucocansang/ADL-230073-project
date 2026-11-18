@@ -1,0 +1,18 @@
+# Local RAG system - CS311 Advanced Deep Learning final project
+# Python 3.10 - 3.13
+
+# LangChain + Ollama + Chroma
+langchain-core>=1.0,<2
+langchain-text-splitters>=1.0,<2
+langchain-ollama>=1.0,<2
+langchain-chroma>=1.0,<2
+chromadb>=1.0,<2
+
+# PDF text extraction (Task 1)
+pypdf>=5.0
+
+# Web interface (Task 4)
+streamlit>=1.40
+
+# Utilities
+requests>=2.31

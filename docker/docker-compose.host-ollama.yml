@@ -1,0 +1,28 @@
+# ---------------------------------------------------------------------------
+# Lighter variant: use the Ollama that is ALREADY running on the host
+# (recommended on macOS, where Ollama in Docker cannot use the Apple GPU).
+#   ollama serve   (on the host, models already pulled)
+#   cd docker && docker compose -f docker-compose.host-ollama.yml up --build
+# ---------------------------------------------------------------------------
+name: cs-handbook-rag-host
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: cs-handbook-rag:latest
+    container_name: rag-app-host
+    environment:
+      - OLLAMA_URL=http://host.docker.internal:11434
+      - LLM_MODEL=${LLM_MODEL:-qwen2.5:1.5b}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # needed on Linux, harmless elsewhere
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../source_code/data/handbook:/app/data/handbook:ro
+      - vector_store:/app/vector_store
+
+volumes:
+  vector_store:
